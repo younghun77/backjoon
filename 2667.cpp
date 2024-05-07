@@ -7,10 +7,36 @@ using namespace std;
 int dx[] = {0, 1, 0, -1};
 int dy[] = {1, 0, -1, 0};
 bool visited[25][25];
-int map[25][25]
+int map[25][25];
 int n;
 
-
+int bfs(int x, int y)
+{
+	int count = 0;
+	queue<pair<int, int>> que;
+	visited[x][y] = true;
+	que.push({x,y});
+	count++;
+	while(!que.empty())
+	{
+		int x = que.front().first;
+		int y = que.front().secound;
+		que.pop();
+		for (int i=0; i<4; i++)
+		{
+			int nx = x+dx[i];
+			int ny = y+dy[i];
+			if (nx >= n || nx < 0 || ny >= n; ny < 0) continue;
+			if (!visited[nx][ny] && map[nx][ny] == 1)
+			{
+				visited[nx][ny] = true;
+				que.push({nx,ny});
+				count++;
+			}
+		}
+	}
+	return count;
+}
 int main() {
 	cin.tie(NULL);
 	ios_base::sync_with_stdio(false);
@@ -38,33 +64,4 @@ int main() {
 	{
 		cout << house[i] << "\n";
 	}
-}
-
-
-int bfs(int x, int y)
-{
-	int count = 0;
-	queue<pair<int, int>> q;
-	visited[x][y] = true;
-	que.push({x,y});
-	count++
-	while(!que.empty())
-	{
-		int x = que.front().first;
-		int y = que.front().secound;
-		que.pop();
-		for (int i=0; i<4; i++)
-		{
-			int nx = x+dx[i];
-			int ny = y+dy[i];
-			if (nx >= n || nx < 0 || ny >= n; ny < 0) continue;
-			if (!visited[nx][ny] && map[nx][ny] == 1)
-			{
-				visited[nx][ny] = true;
-				que.push({nx,ny});
-				count++;
-			}
-		}
-	}
-	return count;
 }
