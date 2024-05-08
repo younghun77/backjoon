@@ -13,25 +13,24 @@ int n;
 int bfs(int x, int y)
 {
 	int count = 0;
-	queue<pair<int, int>> que;
+	queue<pair<int, int>> que; //#
 	visited[x][y] = true;
 	que.push({x,y});
-	count++;
 	while(!que.empty())
 	{
 		int x = que.front().first;
-		int y = que.front().secound;
+		int y = que.front().second;
 		que.pop();
+                count++;
 		for (int i=0; i<4; i++)
 		{
 			int nx = x+dx[i];
 			int ny = y+dy[i];
-			if (nx >= n || nx < 0 || ny >= n; ny < 0) continue;
+			if (nx >= n || nx < 0 || ny >= n || ny < 0) continue;
 			if (!visited[nx][ny] && map[nx][ny] == 1)
 			{
 				visited[nx][ny] = true;
 				que.push({nx,ny});
-				count++;
 			}
 		}
 	}
@@ -45,17 +44,18 @@ int main() {
 	for (int i = 0; i < n; i++){
 		string number;
 		cin >> number;
-		for (int j = 0; i < n; j++){
-			map[i][j] = number - '0';
-		
-		}
+        	for (int j = 0; j < n; j++)
+		{
+			map[i][j] = number[j] - '0'; //#
+	    	}
 	}
+ 
 	vector <int> house;
 	for (int i=0; i<n; i++)
 	{
 		for (int j=0; j<n; j++)
 		{
-			if (!visited[i][j] && map[i][j] == 1) house.push_back(bfs(i, j));
+			if (!visited[i][j] && map[i][j] == 1) house.push_back(bfs(i, j)); //#
 		}
 	}
 	sort(house.begin(), house.end());
