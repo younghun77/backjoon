@@ -7,23 +7,25 @@
 using namespace std;
 int n, m;
 vector<int> graph[1001];
-bool visited[1001];
+bool visited_dfs[1001];
+bool visited_bfs[1001];
+
 
 void dfs(int start)
 {
     cout << start << " ";
-    visited[start] = true;
+    visited_dfs[start] = true;
     for (int i=0; i<graph[start].size(); i++)
     {
       int y = graph[start][i];
-      if(!visited[y]) dfs(y);
+      if(!visited_dfs[y]) dfs(y);
     }
 }
 void bfs(int start)
 {
     queue<int> que;
     que.push(start);
-    visited[start] = true;
+    visited_bfs[start] = true;
     while(!que.empty())
     {
       int x = que.front();
@@ -32,8 +34,8 @@ void bfs(int start)
       for (int i=0; i<graph[x].size(); i++)
       {
           int y = graph[x][i];
-          if (visited[y]) continue;
-          visited[y] = true;
+          if (visited_bfs[y]) continue;
+          visited_bfs[y] = true;
           que.push(y);
       }
     }
