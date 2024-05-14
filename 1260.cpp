@@ -5,11 +5,13 @@
 #include <vector>
 
 using namespace std;
+int n, m;
 vector<int> graph[1001];
 bool visited[1001];
 
 void dfs(int start)
 {
+    cout << start << " ";
     visited[start] = true;
     for (int i=0; i<graph[start].size(); i++)
     {
@@ -26,7 +28,8 @@ void bfs(int start)
     {
       que.pop();
       int x = que.front();
-      for (int i=0; i<graph[x].size() < i++)
+      cout << x << " ";
+      for (int i=0; i<graph[x].size(); i++)
       {
           int y = graph[x][i];
           if (visited[y]) continue;
