@@ -26,8 +26,8 @@ void bfs(int start)
     visited[start] = true;
     while(!que.empty())
     {
-      que.pop();
       int x = que.front();
+      que.pop();
       cout << x << " ";
       for (int i=0; i<graph[x].size(); i++)
       {
