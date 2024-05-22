@@ -7,8 +7,9 @@
 #include <tuple>
 
 bool visited[101][101][101];
-int dx[] = {0, 1, 0, -1};
-int dy[] = {1, 0, -1, 0};
+int dx[] = {-1, 1, 0, 0, 0, 0};
+int dy[] = {0, 0, -1, 1, 0, 0};
+int dz[] = {0, 0, 0, 0, -1, 1};
 queue<tuple<int, int, int>> que;
 vector<int> vec;
 //1.익은 복숭아는 여러곳에 위치함
@@ -17,40 +18,44 @@ vector<int> vec;
 
 int bfs(int x, int y, int z)
 {
+  int curx, cury, curz;
+  int count;
   que.push({x, y, z})
   visited[x][y][z] = true;
   
   while(!que.empty())
   {
-    int x = que.front();
-    visited[x] = true;
+    std::tie(curx, cury, curz) = que.front();
     que.pop();
+	visited[curx][cury][curz] = true;
 
-    for (int i=0; i<4; i++)
+    for (int i=0; i<6; i++)
     {
-      int dx = x+dx[i];
-      int dy = y+dy[i];
-      if (dx < 2 || dy < 2 || dx > 100 || dy > 100) continue;
-      if (arr[dx][dy] == 0 && !visited[dx][dy])
+      int dx = curx+dx[i];
+      int dy = cury+dy[i];
+	  int dz = curz+dz[i]
+      if (dx < 2 || dy < 2 || dz < 2 || dx > 100 || dy > 100 || dz > 100) continue;
+      if (arr[dx][dy][dz] == 0 && !visited[dx][dy][dz])
       {
-        que.push({dx,dy});
-        visited[dx][dy] = true;
+        que.push({dx,dy,dz});
+		count++;
       }
     }
       
   }
+  return count;
 
   
 }
 int main()
 {
-  for(int i=0; i<N; i++)
-    for (int j=0; j<M; j++)
+  for(int i=0; i<N; i++) 
+	for (int j=0; j<M; j++)
       for (int k=0; k<H; k++)
-        {
-            if (!visited(arr[i][j][k]) && arr[i][j][k] == 1) vec.push_back(bfs(i, j, k));
-          
-        }
+            if (!visited(arr[i][j][k]) && arr[i][j][k] == 1) 
+			{
+				vec.push_back(bfs(i, j, k));
+			}
   sort(vec.begin(), vec.end());
-  cout << vec[0];
+  cout << vec[vec.size()];
 }
