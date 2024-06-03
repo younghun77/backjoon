@@ -8,21 +8,31 @@
 
 using namespace std;
 int M, N, H;
-bool visited[101][101][101];
-int arr[101][101][101];
+int dist[101][101][101];
 int dx[] = {-1, 1, 0, 0, 0, 0};
 int dy[] = {0, 0, -1, 1, 0, 0};
 int dz[] = {0, 0, 0, 0, -1, 1};
 queue<tuple<int, int, int>> que;
-vector<int> vec;
 
-int bfs(int x, int y, int z)
+int main()
 {
-    int count = 0;
-    que.push({x, y, z});
-    visited[x][y][z] = true;
+    cin >> M >> N >> H;
 
-    while (!que.empty())
+    for (int h=0; h<H; h++) 
+    {
+        for (int n=0; n<N; n++)
+        {
+            for (int m=0; m<M; m++)
+            {
+                int temp;
+                cin >> temp;
+                if (temp == 1) que.push({m, n, h});
+                if (temp == 0) dist[m][n][h] = -1;
+            }
+        }
+    }
+
+    while(!que.empty())
     {
         int curx, cury, curz;
         tie(curx, cury, curz) = que.front();
@@ -34,38 +44,28 @@ int bfs(int x, int y, int z)
             int ny = cury + dy[i];
             int nz = curz + dz[i];
             if (nx < 0 || ny < 0 || nz < 0 || nx >= M || ny >= N || nz >= H) continue;
-            if (arr[nx][ny][nz] == 0 && !visited[nx][ny][nz])
-            {
-                que.push({nx, ny, nz});
-                visited[nx][ny][nz] = true;
-                count++;
-            }
+            if (dist[nx][ny][nz] != -1) continue;
+            dist[nx][ny][nz] = dist[curx][cury][curz]+1;
+            que.push({nx, ny, nz});
         }
+
     }
-    return count;
-}
 
-int main()
-{
-    cin >> M >> N >> H;
-
-    for (int i = 0; i < H; i++) 
+    int ans = 0;
+    for (int h=0; h<H; h++) 
     {
-        for (int j = 0; j < N; j++)
+        for (int n=0; n<N; n++)
         {
-            for (int k = 0; k < M; k++)
+            for (int m=0; m<M; m++)
             {
-                int temp;
-                cin >> temp;
-                arr[i][j][k] = temp;
-                visited[i][j][k] = false;
-                if (!visited[i][j][k] && arr[i][j][k] == 1) 
+                if(dist[m][n][h] == -1)
                 {
-                    vec.push_back(bfs(i, j, k));
+                    cout << -1 << "\n";
+                    return 0;
                 }
+                ans = max(ans, dist[m][n][h]);
             }
         }
     }
-    sort(vec.begin(), vec.end());
-    cout << vec.back();
+    cout << ans << "\n";
 }
