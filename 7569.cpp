@@ -57,11 +57,11 @@ int main()
             {
                 int temp;
                 cin >> temp;
-                arr[k][j][i] = temp;
-                visited[k][j][i] = false;
-                if (!visited[k][j][i] && arr[k][j][i] == 1) 
+                arr[i][j][k] = temp;
+                visited[i][j][k] = false;
+                if (!visited[i][j][k] && arr[i][j][k] == 1) 
                 {
-                    vec.push_back(bfs(k, j, i));
+                    vec.push_back(bfs(i, j, k));
                 }
             }
         }
